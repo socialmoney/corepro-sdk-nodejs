@@ -1,0 +1,7 @@
+{
+    "coreProApiKey" : "your-api-key-here",
+    "coreProApiSecret" : "your-api-secret-here",
+    "coreProDomainName" : "sandbox-api.corepro.io",
+    "coreProProxyServer" : "127.0.0.1",
+    "coreProProxyPort" : 8888
+}
