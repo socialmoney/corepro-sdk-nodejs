@@ -2,16 +2,18 @@
  * Created by socialmoneydev on 8/29/2014.
  */
 
+var Customer = require('./customer');
 var Account = require('./account');
+var ExternalAccount = require('./externalaccount');
 
 module.exports = {
-    sayHi: function () {
-        console.log('hi!');
-        return "Hi";
-        //return 'Hi ' + new Date().toTimeString();
-    },
-
     account: function() {
         return new Account();
+    },
+    customer: function() {
+        return new Customer();
+    },
+    externalAccount: function() {
+        return new ExternalAccount();
     }
 };

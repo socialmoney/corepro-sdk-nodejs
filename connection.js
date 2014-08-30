@@ -12,13 +12,13 @@ var Connection = function() {
     self.proxyServer = null;
     self.proxyPort = null;
 
-    self.createFromConfig = function(){
+    self.createFromConfig = function(apiKeyOverride, apiSecretOverride, domainNameOverride, proxyServerOverride, proxyPortOverride){
         var config = require('./config.json');
-        self.apiKey = config.coreProApiKey || null;
-        self.apiSecret = config.coreProApiSecret || null;
-        self.domainName = config.coreProDomainName ||  null;
-        self.proxyServer = config.coreProProxyServer ||  null;
-        self.proxyPort = config.coreProProxyPort||  null;
+        self.apiKey = apiKeyOverride || config.coreProApiKey || null;
+        self.apiSecret = apiSecretOverride || config.coreProApiSecret || null;
+        self.domainName = domainNameOverride || config.coreProDomainName ||  null;
+        self.proxyServer = proxyServerOverride || config.coreProProxyServer ||  null;
+        self.proxyPort = proxyPortOverride || config.coreProProxyPort||  null;
         return self;
     };
 

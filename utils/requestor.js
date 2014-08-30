@@ -12,16 +12,33 @@ var util = require('util');
 var Requestor = function() {
     var self = this;
 
-    self.get = function(relativeUrl, cls, callback, connection, loggingObject){
+    self.merge = function(src, dest){
+        src = src || {};
+        dest = dest || {};
+        if (dest.customMerge != null){
+            for(var p in src){
+                if (dest.hasOwnProperty(p)){
+                    dest.customMerge(p, src[p]);
+                }
+            }
+        } else {
+            for(var p in src){
+                if (dest.hasOwnProperty(p)){
+                    dest[p] = src[p];
+                }
+            }
+        }
+        return dest;
+    }
 
+    self.initRequest = function(connection, relativeUrl, method) {
         connection = connection || new Connection().createFromConfig();
-
         var conn = https;
         var options = {
             host: connection.domainName,
             port: 443,
             path: relativeUrl,
-            method: 'GET',
+            method: method,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Basic ' + connection.getAuthHeader(),
@@ -39,53 +56,86 @@ var Requestor = function() {
             process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0; // Ignore 'UNABLE_TO_VERIFY_LEAF_SIGNATURE' authorization error
         }
 
-        var req = conn.request(options, function (res) {
-            console.log('status: ' + res.statusCode);
-            res.on('data', function (d) {
-                var output = null;
-                var payload = JSON.parse(d);
+        return { conn : conn, options: options};
+
+    };
+
+    self.parseResponse = function(response, classDefs, callback){
+        var data = '';
+        response.on('data', function (chunk) {
+            data += chunk;
+        });
+        response.on('end', function(){
+            var output = null;
+            var payload = JSON.parse(data);
+            var cls = null;
+            if (classDefs != null) {
+                cls = classDefs['data'] || null;
+            }
+            if (cls == null){
+                output = payload.data;
+            } else {
                 if (util.isArray(payload.data)){
                     output = [];
                     for(var i=0;i<payload.data.length;i++){
-                        var obj = new cls();
-                        var item = payload.data[i];
-                        for (var p in item) {
-                            if (obj.hasOwnProperty(p)) {
-                                obj[p] = item[p];
-                            }
+                        var obj = self.merge(payload.data[i], new cls());
+                        if (obj.hasOwnProperty('requestId')){
+                            obj['requestId'] = payload.requestId;
                         }
                         output.push(obj);
                     }
                 } else {
-                    output = new cls();
-                    for (var p2 in payload.data) {
-                        if (output.hasOwnProperty(p2)) {
-                            output[p2] = payload.data[p2];
-                        }
+                    output = self.merge(payload.data, new cls());
+                    if (output.hasOwnProperty('requestId')){
+                        output['requestId'] = payload.requestId;
                     }
                 }
+            }
 
-                if (res.statusCode == 200 || res.statusCode == 201) {
-                    // success!
-                    console.log(output);
-                    callback(output, null);
-                } else {
-                    // failure.
-                    var errorList = [];
-                    for (var j = 0;j<payload.errors.length;j++){
-                        var e = payload.errors[j];
-                        var ae = new ApiError(e.code, e.message);
-                        errorList.push(ae);
-                    }
-                    callback(output, new CoreProApiException(errorList));
+            if (response.statusCode == 200 || response.statusCode == 201) {
+                // success!
+                //console.log(output);
+                callback(output, null);
+            } else {
+                // failure.
+                var errorList = [];
+                for (var j = 0;j<payload.errors.length;j++){
+                    var e = payload.errors[j];
+                    var ae = new ApiError(e.code, e.message);
+                    errorList.push(ae);
                 }
-            });
+                callback(output, new CoreProApiException(errorList));
+            }
+        });
+
+    };
+
+    self.get = function(relativeUrl, cls, callback, connection, loggingObject){
+
+        var requestProps = self.initRequest(connection, relativeUrl, 'GET');
+        var req = requestProps.conn.request(requestProps.options, function (resp) {
+            self.parseResponse(resp, { "data" : cls }, callback);
         });
         req.on('error', function (e) {
             var ae = new ApiError(e.code, e.message);
-            throw new CoreProApiException(ae);
-            //console.log('req error: ' + e.message);
+            callback(null, new CoreProApiException(ae));
         });
+        req.end();
+    };
+
+    self.post = function(relativeUrl, cls, toPost, callback, connection, loggingObject){
+        var requestProps = self.initRequest(connection, relativeUrl, 'POST');
+        var req = requestProps.conn.request(requestProps.options, function (resp) {
+            self.parseResponse(resp, { "data" : cls }, callback);
+        });
+        req.on('error', function (e) {
+            var ae = new ApiError(e.code, e.message);
+            callback(null, new CoreProApiException(ae));
+        });
+        if (toPost != null){
+            var body = JSON.stringify(toPost);
+            req.write(body);
+        }
         req.end();
     };
 

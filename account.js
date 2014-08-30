@@ -3,10 +3,13 @@
  */
 
 var Requestor = require("./utils/requestor");
+var AccountClose = require("./models/accountclose");
+var AccountIdOnly = require("./models/accountidonly");
 
 var Account = function() {
     var self = this;
 
+    self.requestId = null;
     self.accountId = null;
     self.customerId = null;
     self.tag = null;
@@ -39,9 +42,36 @@ var Account = function() {
         }, connection, loggingObject);
     };
 
+    self.getByTag = function (customerId, tag, callback, connection, loggingObject) {
+        new Requestor().get('/account/getbytag/' + customerId + '/' + encodeURIComponent(tag), Account, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
     self.list = function (customerId, callback, connection, loggingObject) {
         new Requestor().get('/account/list/' + customerId , Account, function(data, err) {
             callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.create = function (callback, connection, loggingObject){
+        new Requestor().post('/account/create', AccountIdOnly, self, function(data, err) {
+            callback(data.accountId, err);
+        }, connection, loggingObject);
+    };
+
+    self.close = function (customerId, accountId, closeToAccountId, transactionTag, callback, connection, loggingObject){
+        var ac = new AccountClose();
+        ac.customerId = customerId;
+        ac.accountId = accountId;
+        ac.closeToAccountId = closeToAccountId;
+        ac.transactionTag = transactionTag;
+        ac.close(callback, connection, loggingObject);
+    };
+
+    self.update = function (callback, connection, loggingObject){
+        new Requestor().post('/account/update', AccountIdOnly, self, function(data, err) {
+            callback(data.accountId, err);
         }, connection, loggingObject);
     };
 };
