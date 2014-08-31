@@ -20,7 +20,7 @@ var AccountClose = function() {
         new Requestor().post('/account/close', AccountClose, self, function(ac, err) {
             callback(ac, err);
         }, connection, loggingObject);
-    }
+    };
 };
 
 module.exports = AccountClose;

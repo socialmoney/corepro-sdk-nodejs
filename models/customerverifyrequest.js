@@ -3,6 +3,7 @@
  */
 var Requestor = require('../utils/requestor');
 var CustomerAnswer = require('./customeranswer');
+var CustomerResponse = require("./customerresponse");
 
 var CustomerVerifyRequest = function(){
     var self = this;
@@ -23,6 +24,12 @@ var CustomerVerifyRequest = function(){
         }  else {
             self[propertyName] = value;
         }
+    };
+
+    self.verify = function(callback, connection, loggingObject){
+        new Requestor().post('/customer/verify', CustomerResponse, self, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
     };
 };
 

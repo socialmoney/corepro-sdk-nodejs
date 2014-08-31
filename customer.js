@@ -9,6 +9,7 @@ var CustomerAddress = require("./models/customeraddress");
 var Account = require("./account");
 var ExternalAccount = require("./externalaccount");
 var CustomerIdOnly = require("./models/customeridonly");
+var CustomerResponse = require("./models/customerresponse");
 
 var Customer = function() {
     var self = this;
@@ -92,7 +93,7 @@ var Customer = function() {
         }, connection, loggingObject);
     };
 
-    self.getByTag = function (customerId, tag, callback, connection, loggingObject) {
+    self.getByTag = function (tag, callback, connection, loggingObject) {
         new Requestor().get('/customer/getbytag/' + encodeURIComponent(tag), Customer, function(data, err) {
             callback(data, err);
         }, connection, loggingObject);
@@ -106,16 +107,42 @@ var Customer = function() {
 
     self.create = function (callback, connection, loggingObject){
         new Requestor().post('/customer/create', CustomerIdOnly, self, function(data, err) {
-            callback(data.customerId, err);
+            callback(data, err);
         }, connection, loggingObject);
     };
 
     self.update = function (callback, connection, loggingObject){
         new Requestor().post('/customer/update', CustomerIdOnly, self, function(data, err) {
-            callback(data.customerId, err);
+            callback(data, err);
         }, connection, loggingObject);
     };
-    
+
+    self.deactivate = function (callback, connection, loggingObject){
+        new Requestor().post('/customer/deactivate', CustomerIdOnly, self, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.initiate = function (callback, connection, loggingObject){
+        new Requestor().post('/customer/initiate', CustomerResponse, self, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.verify = function(verificationId, answers, callback, connection, loggingObject){
+        var cvr = new CustomerVerifyRequest();
+        cvr.verificationId = verificationId;
+        cvr.answers = answers;
+        cvr.verify(callback, connection, loggingObject);
+    };
+
+    self.search = function(pageNumber, pageSize, connection, loggingObject){
+        new Requestor().post('/customer/search', Customer, self, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+
+    }
+
 };
 
 module.exports = Customer;

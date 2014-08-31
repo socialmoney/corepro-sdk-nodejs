@@ -1,6 +1,8 @@
 /**
  * Created by socialmoneydev on 8/30/2014.
  */
+var ExternalAccountIdOnly = require("./models/externalaccountidonly");
+var ExternalAccountVerify = require("./models/externalaccountverify");
 var ExternalAccount = function(){
     var self = this;
     self.requestId = null;
@@ -17,5 +19,58 @@ var ExternalAccount = function(){
     self.isLocked = null;
     self.lockedDate = null;
     self.lockedReason = null;
+
+
+    self.get = function (customerId, externalAccountId, callback, connection, loggingObject) {
+        new Requestor().get('/externalaccount/get/' + customerId + '/' + externalAccountId, ExternalAccount, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.getByTag = function (customerId, tag, callback, connection, loggingObject) {
+        new Requestor().get('/externalaccount/getbytag/' + customerId + '/' + encodeURIComponent(tag), ExternalAccount, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.list = function (customerId, callback, connection, loggingObject) {
+        new Requestor().get('/externalaccount/list/' + customerId, ExternalAccount, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.create = function (callback, connection, loggingObject){
+        new Requestor().post('/externalaccount/create', ExternalAccountIdOnly, self, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.update = function (callback, connection, loggingObject){
+        new Requestor().post('/externalaccount/update', ExternalAccountIdOnly, self, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.deactivate = function (callback, connection, loggingObject){
+        new Requestor().post('/externalaccount/deactivate', ExternalAccountIdOnly, self, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.initiate = function (callback, connection, loggingObject){
+        new Requestor().post('/externalaccount/initiate', ExternalAccountIdOnly, self, function(data, err) {
+            callback(data, err);
+        }, connection, loggingObject);
+    };
+
+    self.verify = function (amount1, amount2, callback, connection, loggingObject){
+        var eav = new ExternalAccountVerify();
+        eav.customerId = self.customerId;
+        eav.externalAccountId = self.externalAccountId;
+        eav.amount1 = amount1;
+        eav.amount2 = amount2;
+        eav.verify(callback, connection, loggingObject);
+    };
+
 };
 module.exports = ExternalAccount;
