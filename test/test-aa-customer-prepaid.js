@@ -1,5 +1,5 @@
 var CorePro = require('../index');
-var TestBase = require('../utils/aaa-test-base');
+var TestBase = require('../testbase/aaa-test-base');
 
 exports.customerCreate = function(test) {
     var c = CorePro.customer();

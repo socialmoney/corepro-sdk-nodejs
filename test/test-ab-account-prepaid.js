@@ -1,5 +1,5 @@
 var CorePro = require('../index');
-var TestBase = require('../utils/aaa-test-base');
+var TestBase = require('../testbase/aaa-test-base');
 
 exports.accountCreate = function(test){
     var a = CorePro.account();
