@@ -12,8 +12,8 @@ var ExternalAccountVerify = function(){
 
 
     self.verify = function(callback, connection, loggingObject){
-        new Requestor().post('/externalaccount/verify', ExternalAccountIdOnly, self, function(data, err) {
-            callback(data, err);
+        new Requestor().post('/externalaccount/verify', ExternalAccountIdOnly, self, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 };

@@ -27,8 +27,8 @@ var CustomerVerifyRequest = function(){
     };
 
     self.verify = function(callback, connection, loggingObject){
-        new Requestor().post('/customer/verify', CustomerResponse, self, function(data, err) {
-            callback(data, err);
+        new Requestor().post('/customer/verify', CustomerResponse, self, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 };

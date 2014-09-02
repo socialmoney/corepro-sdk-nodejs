@@ -17,8 +17,8 @@ var ExternalAccountDocument = function(){
 
     self.upload = function(callback, connection, loggingObject){
         self.documentContent = base64.encode(self.documentContent);
-        new Requestor().post('/externalaccountdocument/upload', null, self, function(data, err){
-            callback(data, err);
+        new Requestor().post('/externalaccountdocument/upload', null, self, function(ex, data){
+            callback(ex, data);
         }, connection, loggingObject);
     };
 };

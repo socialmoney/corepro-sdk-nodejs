@@ -22,14 +22,14 @@ var Requestor = function() {
                 }
             }
         } else {
-            for(var p in src){
-                if (dest.hasOwnProperty(p)){
-                    dest[p] = src[p];
+            for(var p2 in src){
+                if (dest.hasOwnProperty(p2)){
+                    dest[p2] = src[p2];
                 }
             }
         }
         return dest;
-    }
+    };
 
     self.initRequest = function(connection, relativeUrl, method) {
         connection = connection || new Connection().createFromConfig();
@@ -95,7 +95,7 @@ var Requestor = function() {
             if (response.statusCode == 200 || response.statusCode == 201) {
                 // success!
                 //console.log(output);
-                callback(output, null);
+                callback(null, output);
             } else {
                 // failure.
                 var errorList = [];
@@ -104,7 +104,7 @@ var Requestor = function() {
                     var ae = new ApiError(e.code, e.message);
                     errorList.push(ae);
                 }
-                callback(output, new CoreProApiException(errorList));
+                callback(new CoreProApiException(errorList), output);
             }
         });
 
@@ -118,7 +118,7 @@ var Requestor = function() {
         });
         req.on('error', function (e) {
             var ae = new ApiError(e.code, e.message);
-            callback(null, new CoreProApiException(ae));
+            callback(new CoreProApiException(ae), null);
         });
         req.end();
     };
@@ -130,7 +130,7 @@ var Requestor = function() {
         });
         req.on('error', function (e) {
             var ae = new ApiError(e.code, e.message);
-            callback(null, new CoreProApiException(ae));
+            callback(new CoreProApiException(ae), null);
         });
         if (toPost != null){
             var body = JSON.stringify(toPost);

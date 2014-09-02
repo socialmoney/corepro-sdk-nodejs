@@ -37,26 +37,26 @@ var Account = function() {
     self.miscellaneous = null;
 
     self.get = function (customerId, accountId, callback, connection, loggingObject) {
-        new Requestor().get('/account/get/' + customerId + '/' + accountId, Account, function(data, err) {
-            callback(data, err);
+        new Requestor().get('/account/get/' + customerId + '/' + accountId, Account, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.getByTag = function (customerId, tag, callback, connection, loggingObject) {
-        new Requestor().get('/account/getbytag/' + customerId + '/' + encodeURIComponent(tag), Account, function(data, err) {
-            callback(data, err);
+        new Requestor().get('/account/getbytag/' + customerId + '/' + encodeURIComponent(tag), Account, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.list = function (customerId, callback, connection, loggingObject) {
-        new Requestor().get('/account/list/' + customerId , Account, function(data, err) {
-            callback(data, err);
+        new Requestor().get('/account/list/' + customerId , Account, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.create = function (callback, connection, loggingObject){
-        new Requestor().post('/account/create', AccountIdOnly, self, function(data, err) {
-            callback(data.accountId, err);
+        new Requestor().post('/account/create', AccountIdOnly, self, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
@@ -70,8 +70,8 @@ var Account = function() {
     };
 
     self.update = function (callback, connection, loggingObject){
-        new Requestor().post('/account/update', AccountIdOnly, self, function(data, err) {
-            callback(data.accountId, err);
+        new Requestor().post('/account/update', AccountIdOnly, self, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 };

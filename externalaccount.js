@@ -22,44 +22,44 @@ var ExternalAccount = function(){
 
 
     self.get = function (customerId, externalAccountId, callback, connection, loggingObject) {
-        new Requestor().get('/externalaccount/get/' + customerId + '/' + externalAccountId, ExternalAccount, function(data, err) {
-            callback(data, err);
+        new Requestor().get('/externalaccount/get/' + customerId + '/' + externalAccountId, ExternalAccount, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.getByTag = function (customerId, tag, callback, connection, loggingObject) {
-        new Requestor().get('/externalaccount/getbytag/' + customerId + '/' + encodeURIComponent(tag), ExternalAccount, function(data, err) {
-            callback(data, err);
+        new Requestor().get('/externalaccount/getbytag/' + customerId + '/' + encodeURIComponent(tag), ExternalAccount, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.list = function (customerId, callback, connection, loggingObject) {
-        new Requestor().get('/externalaccount/list/' + customerId, ExternalAccount, function(data, err) {
-            callback(data, err);
+        new Requestor().get('/externalaccount/list/' + customerId, ExternalAccount, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.create = function (callback, connection, loggingObject){
-        new Requestor().post('/externalaccount/create', ExternalAccountIdOnly, self, function(data, err) {
-            callback(data, err);
+        new Requestor().post('/externalaccount/create', ExternalAccountIdOnly, self, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.update = function (callback, connection, loggingObject){
-        new Requestor().post('/externalaccount/update', ExternalAccountIdOnly, self, function(data, err) {
-            callback(data, err);
+        new Requestor().post('/externalaccount/update', ExternalAccountIdOnly, self, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.deactivate = function (callback, connection, loggingObject){
-        new Requestor().post('/externalaccount/deactivate', ExternalAccountIdOnly, self, function(data, err) {
-            callback(data, err);
+        new Requestor().post('/externalaccount/deactivate', ExternalAccountIdOnly, self, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.initiate = function (callback, connection, loggingObject){
-        new Requestor().post('/externalaccount/initiate', ExternalAccountIdOnly, self, function(data, err) {
-            callback(data, err);
+        new Requestor().post('/externalaccount/initiate', ExternalAccountIdOnly, self, function(ex, data) {
+            callback(ex, data);
         }, connection, loggingObject);
     };
 

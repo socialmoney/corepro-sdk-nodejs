@@ -20,14 +20,14 @@ var BankDocument = function(){
     self.expireDate = null;
 
     self.list = function(culture, documentType, callback, connection, loggingObject){
-        new Requestor().get('/bankdocument/list/' + encodeURIComponent(self.culture + '') + '/' + encodeURIComponent(self.documentType), BankDocument, function(data, err){
-            callback(data, err);
+        new Requestor().get('/bankdocument/list/' + encodeURIComponent(self.culture + '') + '/' + encodeURIComponent(self.documentType), BankDocument, function(ex, data){
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.download = function(callback, connection, loggingObject){
-        new Requestor().get('/bankdocument/download/' + encodeURIComponent(self.culture + '') + '/' + self.documentId, FileContent, function(data, err){
-            callback(data, err);
+        new Requestor().get('/bankdocument/download/' + encodeURIComponent(self.culture + '') + '/' + self.documentId, FileContent, function(ex, data){
+            callback(ex, data);
         }, connection, loggingObject);
     };
 };

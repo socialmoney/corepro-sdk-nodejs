@@ -16,14 +16,14 @@ var Transfer = function() {
     self.transactionId = null;
 
     self.create = function(callback, connection, loggingObject){
-        new Requestor().post('/transfer/create', Transfer, self, function(data, err){
-            callback(data, err);
+        new Requestor().post('/transfer/create', Transfer, self, function(ex, data){
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.voidTransaction = function(callback, connection, loggingObject){
-        new Requestor().post('/transfer/void', Transfer, self, function(data, err){
-            callback(data, err);
+        new Requestor().post('/transfer/void', Transfer, self, function(ex, data){
+            callback(ex, data);
         }, connection, loggingObject);
     };
 };

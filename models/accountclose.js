@@ -17,8 +17,8 @@ var AccountClose = function() {
     self.isCloseToExternalAccount = null;
 
     self.close = function(callback, connection, loggingObject){
-        new Requestor().post('/account/close', AccountClose, self, function(ac, err) {
-            callback(ac, err);
+        new Requestor().post('/account/close', AccountClose, self, function(ex, ac) {
+            callback(ex, ac);
         }, connection, loggingObject);
     };
 };

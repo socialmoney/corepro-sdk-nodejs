@@ -15,20 +15,20 @@ var Statement = function() {
     self.year = null;
 
     self.get = function(callback, connection, loggingObject){
-        new Requestor().get('/statement/get/' + self.customerId + '/' + self.statementId, Statement, function(data, err){
-            callback(data, err);
+        new Requestor().get('/statement/get/' + self.customerId + '/' + self.statementId, Statement, function(ex, data){
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.list = function(callback, connection, loggingObject){
-        new Requestor().get('/statement/list/' + self.customerId, Statement, function(data, err){
-            callback(data, err);
+        new Requestor().get('/statement/list/' + self.customerId, Statement, function(ex, data){
+            callback(ex, data);
         }, connection, loggingObject);
     };
 
     self.download = function(callback, connection, loggingObject){
-        new Requestor().get('/statement/download/' + self.customerId + '/' + self.statementId, FileContent, function(data, err){
-            callback(data, err);
+        new Requestor().get('/statement/download/' + self.customerId + '/' + self.statementId, FileContent, function(ex, data){
+            callback(ex, data);
         }, connection, loggingObject);
     };
 };

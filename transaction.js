@@ -42,8 +42,8 @@ var Transaction = function() {
             start = '1900-01-01';
         }
 
-        new Requestor().get('/transaction/list/' + self.customerId + '/' + self.accountId + '/' + encodeURIComponent(self.status + '') + '/' + start + '/' + finish + '?pageNumber=' + (pageNumber || '0') + '&pageSize=' + (pageSize || '50'), Transaction, function(data, err){
-            callback(data, err);
+        new Requestor().get('/transaction/list/' + self.customerId + '/' + self.accountId + '/' + encodeURIComponent(self.status + '') + '/' + start + '/' + finish + '?pageNumber=' + (pageNumber || '0') + '&pageSize=' + (pageSize || '50'), Transaction, function(ex, data){
+            callback(ex, data);
         }, connection, loggingObject);
     };
 

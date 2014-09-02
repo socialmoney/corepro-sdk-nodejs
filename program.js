@@ -77,6 +77,14 @@ var Program = function() {
             self[propertyName] = value;
         }
     };
+
+
+    self.get = function (callback, connection, loggingObject) {
+        new Requestor().get('/program/get', Program, function(ex, data) {
+            callback(ex, data);
+        }, connection, loggingObject);
+    };
+
 };
 
 module.exports = Program;
