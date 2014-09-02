@@ -4,37 +4,30 @@
 var Connection = require('../connection');
 
 var TestBase = function() {
-//    var self = this;
-//    self.setUp = function(){
-//        return '1';
-//    };
-//    self.tearDown = function(){
-//        return '2';
-//    };
 };
 // common properties between prepaid and nacha
 TestBase.timestamp = new Date().toISOString();
 
-TestBase.documentId = {};
+TestBase.documentId = null;
 
-TestBase.loggingObject = {};
+TestBase.loggingObject = null;
 
 
 // prepaid-specific program
 var testPrepaidConfig = require('./test-prepaid-config.json');
 TestBase.prepaidConn = new Connection().createFromConfig(testPrepaidConfig.apiKey, testPrepaidConfig.apiSecret);
 
-TestBase.prepaidCustomerId = {};
+TestBase.prepaidCustomerId = null;
 
-TestBase.prepaidAccountId = {};
+TestBase.prepaidAccountId = null;
 
-TestBase.prepaidExternalAccountId = {};
+TestBase.prepaidExternalAccountId = null;
 
-TestBase.prepaidCustomerBeneficiaryId = {};
+TestBase.prepaidCustomerBeneficiaryId = null;
 
-TestBase.prepaidInternalToExternalTransactionId = {};
+TestBase.prepaidInternalToExternalTransactionId = null;
 
-TestBase.prepaidExternalToInternalTransactionId = {};
+TestBase.prepaidExternalToInternalTransactionId = null;
 
 
 // nacha-specific program
@@ -42,12 +35,12 @@ var testNachaConfig = require('./test-nacha-config.json');
 
 TestBase.nachaConn = new Connection().createFromConfig(testNachaConfig.apiKey, testNachaConfig.apiSecret);
 
-TestBase.nachaCustomerId = {};
+TestBase.nachaCustomerId = null;
 
-TestBase.nachaAccountId = {};
+TestBase.nachaAccountId = null;
 
-TestBase.nachaExternalAccountId = {};
+TestBase.nachaExternalAccountId = null;
 
-TestBase.nachaExternalToInternalTransactionId = {};
+TestBase.nachaExternalToInternalTransactionId = null;
 
 module.exports = TestBase;
