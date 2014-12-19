@@ -5,6 +5,10 @@
 var Requestor = require('./utils/requestor');
 var ProgramInterestRate = require('./models/programinterestrate');
 var ProgramLimit = require('./models/programlimit');
+var ProgramECode = require('./models/programecode');
+var ProgramChecking = require('./models/programchecking');
+var ProgramPrepaid = require('./models/programprepaid');
+var ProgramSavings = require('./models/programsavings');
 
 var Program = function() {
     var self = this;
@@ -12,24 +16,24 @@ var Program = function() {
     self.name = null;
     self.verificationType = null;
     self.timeZone = null;
-    self.regDFeeAmount = null;
-    self.regDMonthlyTransactionWithdrawCountMax = null;
-    self.perTransactionWithdrawLimit = null;
     self.perUserDailyWithdrawLimit = null;
     self.perUserMonthlyWithdrawLimit = null;
     self.perProgramDailyWithdrawLimit = null;
-    self.perTransactionDepositLimit = null;
     self.perUserDailyDepositLimit = null;
     self.perUserMonthlyDepositLimit = null;
     self.perProgramDailyDepositLimit = null;
     self.website = null;
     self.isInternalToInternalTransferEnabled = null;
     self.decimalCount = null;
-    self.isInterestEnabled = null;
-    self.allowedAccountType = null;
     self.isRecurringContributionEnabled = null;
-    self.interestRates = [];
     self.filledDate = null;
+    self.perUserExternalAccountCountMax = null;
+    self.perUserAccountCountMax = null;
+    self.perUserTotalAccountBalanceMax = null;
+    self.checkingProducts = null;
+    self.eCodeProducts = null;
+    self.prepaidProducts = null;
+    self.savingsProducts = null;
 
     self.customMerge = function(propertyName, value){
         var r = new Requestor();
@@ -41,10 +45,6 @@ var Program = function() {
                     self.interestRates.push(item);
                 }
             }
-        } else if (propertyName == 'perTransactionWithdrawLimit') {
-            self.perTransactionWithdrawLimit = new ProgramLimit();
-            self.perTransactionWithdrawLimit.minimumAmount = value.minimumAmount;
-            self.perTransactionWithdrawLimit.maximumAmount = value.maximumAmount;
         } else if (propertyName == 'perUserDailyWithdrawLimit') {
             self.perUserDailyWithdrawLimit = new ProgramLimit();
             self.perUserDailyWithdrawLimit.minimumAmount = value.minimumAmount;
@@ -57,10 +57,6 @@ var Program = function() {
             self.perProgramDailyWithdrawLimit = new ProgramLimit();
             self.perProgramDailyWithdrawLimit.minimumAmount = value.minimumAmount;
             self.perProgramDailyWithdrawLimit.maximumAmount = value.maximumAmount;
-        } else if (propertyName == 'perTransactionDepositLimit') {
-            self.perTransactionDepositLimit = new ProgramLimit();
-            self.perTransactionDepositLimit.minimumAmount = value.minimumAmount;
-            self.perTransactionDepositLimit.maximumAmount = value.maximumAmount;
         } else if (propertyName == 'perUserDailyDepositLimit') {
             self.perUserDailyDepositLimit = new ProgramLimit();
             self.perUserDailyDepositLimit.minimumAmount = value.minimumAmount;
@@ -73,6 +69,46 @@ var Program = function() {
             self.perProgramDailyDepositLimit = new ProgramLimit();
             self.perProgramDailyDepositLimit.minimumAmount = value.minimumAmount;
             self.perProgramDailyDepositLimit.maximumAmount = value.maximumAmount;
+        } else if (propertyName == 'checkingProducts'){
+            self.checkingProducts = {}
+            if (value != null){
+                for (var prop in value){
+                    if (value.hasOwnProperty(prop)){
+                        var item = r.merge(value[prop], new ProgramChecking());
+                        self.checkingProducts[prop] = item;
+                    }
+                }
+            }
+        } else if (propertyName == 'eCodeProducts'){
+            self.eCodeProducts = {}
+            if (value != null){
+                for (var prop in value){
+                    if (value.hasOwnProperty(prop)){
+                        var item = r.merge(value[prop], new ProgramECode());
+                        self.eCodeProducts[prop] = item;
+                    }
+                }
+            }
+        } else if (propertyName == 'prepaidProducts'){
+            self.prepaidProducts = {}
+            if (value != null){
+                for (var prop in value){
+                    if (value.hasOwnProperty(prop)){
+                        var item = r.merge(value[prop], new ProgramPrepaid());
+                        self.prepaidProducts[prop] = item;
+                    }
+                }
+            }
+        } else if (propertyName == 'savingsProducts'){
+            self.savingsProducts = {}
+            if (value != null){
+                for (var prop in value){
+                    if (value.hasOwnProperty(prop)){
+                        var item = r.merge(value[prop], new ProgramSavings());
+                        self.savingsProducts[prop] = item;
+                    }
+                }
+            }
         } else {
             self[propertyName] = value;
         }

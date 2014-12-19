@@ -3,7 +3,6 @@
  */
 
 var Requestor = require('./utils/requestor');
-var base64 = require('base64');
 
 var CustomerDocument = function(){
     var self = this;
@@ -15,7 +14,7 @@ var CustomerDocument = function(){
     self.reasonType = null;
 
     self.upload = function(callback, connection, loggingObject){
-        self.documentContent = base64.encode(self.documentContent);
+        self.documentContent = new Buffer(self.documentContent).toString('base64');
         new Requestor().post('/customerdocument/upload', null, self, function(ex, data){
             callback(ex, data);
         }, connection, loggingObject);

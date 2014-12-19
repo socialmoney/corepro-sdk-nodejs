@@ -1,5 +1,31 @@
 {
-    "name": "corepro-sdk-nodejs",
-    "version": "0.0.2"
 
+    "name": "corepro",
+    "version": "0.0.3",
+    "description": "A NodeJS SDK for consuming the CorePro API",
+    "main": "index.js",
+    "scripts": {
+        "test": "nodeunit test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/socialmoney/corepro-sdk-nodejs.git"
+    },
+    "keywords": [
+        "corepro",
+        "api",
+        "sdk"
+    ],
+    "author": "SocialMoneyDev <devsupport@socialmoney.com> (https://docs.corepro.io/)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/socialmoney/corepro-sdk-nodejs/issues"
+    },
+    "homepage": "https://github.com/socialmoney/corepro-sdk-nodejs",
+    "directories": {
+        "test": "test"
+    },
+    "devDependencies": {
+        "requirejs": "^2.1.14"
+    }
 }

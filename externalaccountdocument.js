@@ -3,7 +3,6 @@
  */
 
 var Requestor = require('./utils/requestor');
-var base64 = require('base64');
 
 var ExternalAccountDocument = function(){
     var self = this;
@@ -16,7 +15,7 @@ var ExternalAccountDocument = function(){
     self.reasonType = null;
 
     self.upload = function(callback, connection, loggingObject){
-        self.documentContent = base64.encode(self.documentContent);
+        self.documentContent = new Buffer(self.documentContent).toString('base64');
         new Requestor().post('/externalaccountdocument/upload', null, self, function(ex, data){
             callback(ex, data);
         }, connection, loggingObject);
