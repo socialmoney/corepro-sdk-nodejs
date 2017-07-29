@@ -5,7 +5,7 @@ var Connection = require('../connection');
 
 var TestBase = function() {
 };
-// common properties between prepaid and nacha
+// common properties
 TestBase.timestamp = new Date().toISOString();
 
 TestBase.documentId = null;
@@ -13,34 +13,33 @@ TestBase.documentId = null;
 TestBase.loggingObject = null;
 
 
-// prepaid-specific program
-var testPrepaidConfig = require('./test-prepaid-config.json');
-TestBase.prepaidConn = new Connection().createFromConfig(testPrepaidConfig.apiKey, testPrepaidConfig.apiSecret);
+var testExampleConfig = require('./test-example1-config.json');
+TestBase.exampleConn = new Connection().createFromConfig(testExampleConfig.apiKey, testExampleConfig.apiSecret);
 
-TestBase.prepaidCustomerId = null;
+TestBase.exampleCustomerId = null;
 
-TestBase.prepaidAccountId = null;
+TestBase.exampleAccountId = null;
 
-TestBase.prepaidExternalAccountId = null;
+TestBase.exampleExternalAccountId = null;
 
-TestBase.prepaidCustomerBeneficiaryId = null;
+TestBase.exampleCustomerBeneficiaryId = null;
 
-TestBase.prepaidInternalToExternalTransactionId = null;
+TestBase.exampleInternalToExternalTransactionId = null;
 
-TestBase.prepaidExternalToInternalTransactionId = null;
+TestBase.exampleExternalToInternalTransactionId = null;
 
 
-// nacha-specific program
-var testNachaConfig = require('./test-nacha-config.json');
-
-TestBase.nachaConn = new Connection().createFromConfig(testNachaConfig.apiKey, testNachaConfig.apiSecret);
-
-TestBase.nachaCustomerId = null;
-
-TestBase.nachaAccountId = null;
-
-TestBase.nachaExternalAccountId = null;
-
-TestBase.nachaExternalToInternalTransactionId = null;
+// // nacha-specific program
+// var testNachaConfig = require('./test-nacha-config.json');
+//
+// TestBase.nachaConn = new Connection().createFromConfig(testNachaConfig.apiKey, testNachaConfig.apiSecret);
+//
+// TestBase.nachaCustomerId = null;
+//
+// TestBase.nachaAccountId = null;
+//
+// TestBase.nachaExternalAccountId = null;
+//
+// TestBase.nachaExternalToInternalTransactionId = null;
 
 module.exports = TestBase;

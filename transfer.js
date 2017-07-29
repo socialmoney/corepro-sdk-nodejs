@@ -1,5 +1,5 @@
 /**
- * Created by socialmoneydev on 9/1/2014.
+ * Created by socialmoneydev on 7/28/2017.
  */
 
 var Requestor = require('./utils/requestor');
@@ -14,6 +14,7 @@ var Transfer = function() {
     self.amount = null;
     self.tag = null;
     self.transactionId = null;
+    self.description = null;
 
     self.create = function(callback, connection, loggingObject){
         new Requestor().post('/transfer/create', Transfer, self, function(ex, data){

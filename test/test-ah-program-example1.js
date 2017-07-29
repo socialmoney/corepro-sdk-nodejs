@@ -7,13 +7,13 @@ var TestBase = require('../testbase/aaa-test-base');
 exports.programGet = function(test) {
     var pgm = CorePro.program();
     pgm.get(function(ex, p) {
-        if (ex != null){
+        if (ex){
             console.log(ex);
             test.ok(false);
             test.done();
         } else {
-            test.ok(p.prepaidProducts['prepaid'].category == 'Prepaid');
+            test.ok(p.checkingProducts['checking'].category === 'Checking');
             test.done();
         }
-    }, TestBase.prepaidConn, TestBase.loggingObject);
+    }, TestBase.exampleConn, TestBase.loggingObject);
 };

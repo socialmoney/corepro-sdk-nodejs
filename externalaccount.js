@@ -9,16 +9,27 @@ var ExternalAccount = function(){
     self.externalAccountId = null;
     self.customerId = null;
     self.tag = null;
+    self.name = null;
     self.routingNumber = null;
+    self.routingNumberMasked = null;
     self.accountNumber = null;
+    self.accountNumberMasked = null;
     self.type= null;
     self.nickName = null;
     self.status = null;
+    self.statusDate = null;
+    self.lastModifiedDate = null;
+
     self.nocCode = null;
-    self.isActive = null;
+    /* DEPRECATED -- self.isActive = null; */
     self.isLocked = null;
     self.lockedDate = null;
     self.lockedReason = null;
+    self.customField1 = null;
+    self.customField2 = null;
+    self.customField3 = null;
+    self.customField4 = null;
+    self.customField5 = null;
 
 
     self.get = function (customerId, externalAccountId, callback, connection, loggingObject) {
@@ -51,8 +62,8 @@ var ExternalAccount = function(){
         }, connection, loggingObject);
     };
 
-    self.deactivate = function (callback, connection, loggingObject){
-        new Requestor().post('/externalaccount/deactivate', ExternalAccountIdOnly, self, function(ex, data) {
+    self.archive = function (callback, connection, loggingObject){
+        new Requestor().post('/externalaccount/archive', ExternalAccountIdOnly, self, function(ex, data) {
             callback(ex, data);
         }, connection, loggingObject);
     };
@@ -69,7 +80,9 @@ var ExternalAccount = function(){
         eav.externalAccountId = self.externalAccountId;
         eav.amount1 = amount1;
         eav.amount2 = amount2;
-        eav.verify(callback, connection, loggingObject);
+        eav.verify(function(ex, data) {
+            callback(ex, data);
+        }, connection, loggingObject);
     };
 
 };

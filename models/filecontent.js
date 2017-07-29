@@ -7,6 +7,9 @@ var FileContent = function(){
     self.content = null;
     self.contentType = null;
     self.contentLength = null;
+    // self.getRawContentBytes = function() {
+    //     return Buffer.from(self.content, 'base64');
+    // }
 };
 
 module.exports = FileContent;

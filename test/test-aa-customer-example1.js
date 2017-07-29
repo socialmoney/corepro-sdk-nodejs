@@ -15,38 +15,38 @@ exports.customerCreate = function(test) {
     c.tag = "vam" + TestBase.timestamp;
     c.taxId = '012341234';
     c.create(function(ex, cust){
-        if (ex != null){
+        if (ex){
             console.log(ex);
             test.ok(false);
             test.done();
         } else {
-            TestBase.prepaidCustomerId = cust.customerId;
-            console.log(TestBase.prepaidCustomerId);
+            console.log('customerId=' + cust.customerId);
+            TestBase.exampleCustomerId = cust.customerId;
             console.log(TestBase.timestamp);
-            test.notEqual(TestBase.prepaidCustomerId, 0);
+            test.ok(TestBase.exampleCustomerId > 0);
             test.done();
         }
-    }, TestBase.prepaidConn, TestBase.loggingObject);
+    }, TestBase.exampleConn, TestBase.loggingObject);
 };
 
 
 exports.customerGet = function(test) {
-    CorePro.customer().get(TestBase.prepaidCustomerId, function (ex, cust) {
-        test.equal(cust.customerId, TestBase.prepaidCustomerId);
+    CorePro.customer().get(TestBase.exampleCustomerId, function (ex, cust) {
+        test.equal(cust.customerId, TestBase.exampleCustomerId);
         test.done();
-    }, TestBase.prepaidConn, TestBase.loggingObject);
+    }, TestBase.exampleConn, TestBase.loggingObject);
 };
 
 exports.customerGetByTag = function(test) {
     CorePro.customer().getByTag('vam' + TestBase.timestamp, function (ex, cust) {
-        test.equal(cust.customerId, TestBase.prepaidCustomerId);
+        test.equal(cust.customerId, TestBase.exampleCustomerId);
         test.done();
-    }, TestBase.prepaidConn, TestBase.loggingObject);
+    }, TestBase.exampleConn, TestBase.loggingObject);
 };
 
 exports.customerList = function(test){
     CorePro.customer().list(function (ex, cust) {
         test.ok(cust[0].customerCount > 0);
         test.done();
-    }, TestBase.prepaidConn, TestBase.loggingObject);
+    }, TestBase.exampleConn, TestBase.loggingObject);
 };

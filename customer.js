@@ -20,6 +20,7 @@ var Customer = function() {
     self.firstName = null;
     self.middleName = null;
     self.lastName = null;
+    self.suffix = null;
     self.birthDate = null;
     self.gender = null;
     self.culture = null;
@@ -28,10 +29,15 @@ var Customer = function() {
     self.createdDate = null;
     self.taxId = null;
     self.driversLicenseNumber = null;
+    self.driversLicenseNumberMasked = null;
     self.driversLicenseState = null;
-    self.driversLicenseExpirationDate = null;
+    self.driversLicenseIssueDate = null;
+    self.driversLicenseExpireDate = null;
     self.passportNumber = null;
+    self.passportNumberMasked = null;
     self.passportCountry = null;
+    self.passportIssueDate = null;
+    self.passportExpireDate = null;
     self.emailAddress = null;
     self.isActive = null;
     self.isLocked = null;
@@ -41,43 +47,61 @@ var Customer = function() {
     self.isSubjectToBackupWithholding = null;
     self.isOptedInToBankCommunication = null;
     self.isDocumentsAccepted = null;
+    self.customField1 = null;
+    self.customField2 = null;
+    self.customField3 = null;
+    self.customField4 = null;
+    self.customField5 = null;
+    self.accessTypeCode = null;
+    self.lastModifiedDate = null;
+    self.lastActivityDate = null;
+
     self.phones = [];
     self.addresses = [];
     self.accounts = [];
     self.externalAccounts = [];
+    self.cards = [];
 
     self.customMerge = function(propertyName, value){
         var r = new Requestor();
-        if (propertyName == 'phones') {
+        if (propertyName === 'phones') {
             self.phones = [];
-            if (value != null){
+            if (value){
                 for(var i=0;i<value.length;i++){
                     var item = r.merge(value[i], new CustomerPhone());
                     self.phones.push(item);
                 }
             }
-        } else if (propertyName == 'addresses'){
+        } else if (propertyName === 'addresses'){
             self.addresses = [];
-            if (value != null){
+            if (value){
                 for(var i2=0;i2<value.length;i2++){
                     var item2 = r.merge(value[i2], new CustomerAddress());
                     self.addresses.push(item2);
                 }
             }
-        } else if (propertyName == 'accounts'){
+        } else if (propertyName === 'accounts'){
             self.accounts = [];
-            if (value != null){
+            if (value){
                 for(var i3=0;i3<value.length;i3++){
                     var item3 = r.merge(value[i3], new Account());
                     self.accounts.push(item3);
                 }
             }
-        } else if (propertyName == 'externalAccounts'){
+        } else if (propertyName === 'externalAccounts'){
             self.externalAccounts = [];
-            if (value != null){
+            if (value){
                 for(var i4=0;i4<value.length;i4++){
                     var item4 = r.merge(value[i4], new ExternalAccount());
                     self.externalAccounts.push(item4);
+                }
+            }
+        } else if (propertyName === 'cards'){
+            self.externalAccounts = [];
+            if (value){
+                for(var i5=0;i5<value.length;i5++){
+                    var item5 = r.merge(value[i5], new Card());
+                    self.cards.push(item5);
                 }
             }
         } else {
@@ -88,12 +112,21 @@ var Customer = function() {
     };
 
     self.get = function (customerId, callback, connection, loggingObject) {
+        customerId = customerId || self.customerId;
         new Requestor().get('/customer/get/' + customerId , Customer, function(ex, data) {
             callback(ex, data);
         }, connection, loggingObject);
     };
 
+    self.getByEmail = function (emailAddress, callback, connection, loggingObject) {
+        emailAddress = emailAddress || self.emailAddress;
+        new Requestor().get('/customer/getbyemail/' + encodeURIComponent(emailAddress), Customer, function(ex, data) {
+            callback(ex, data);
+        }, connection, loggingObject);
+    };
+
     self.getByTag = function (tag, callback, connection, loggingObject) {
+        tag = tag || self.tag;
         new Requestor().get('/customer/getbytag/' + encodeURIComponent(tag), Customer, function(ex, data) {
             callback(ex, data);
         }, connection, loggingObject);
@@ -117,8 +150,8 @@ var Customer = function() {
         }, connection, loggingObject);
     };
 
-    self.deactivate = function (callback, connection, loggingObject){
-        new Requestor().post('/customer/deactivate', CustomerIdOnly, self, function(ex, data) {
+    self.archive = function (callback, connection, loggingObject){
+        new Requestor().post('/customer/archive', CustomerIdOnly, self, function(ex, data) {
             callback(ex, data);
         }, connection, loggingObject);
     };
@@ -133,10 +166,12 @@ var Customer = function() {
         var cvr = new CustomerVerifyRequest();
         cvr.verificationId = verificationId;
         cvr.answers = answers;
-        cvr.verify(callback, connection, loggingObject);
+        cvr.verify(function(ex, data) {
+            callback(ex, data);
+        }, connection, loggingObject);
     };
 
-    self.search = function(pageNumber, pageSize, connection, loggingObject){
+    self.search = function(pageNumber, pageSize, callback, connection, loggingObject){
         new Requestor().post('/customer/search', Customer, self, function(ex, data) {
             callback(ex, data);
         }, connection, loggingObject);

@@ -3,9 +3,9 @@ var TestBase = require('../testbase/aaa-test-base');
 
 exports.accountCreate = function(test){
     var a = CorePro.account();
-    a.customerId = TestBase.prepaidCustomerId;
+    a.customerId = TestBase.exampleCustomerId;
     a.tag = "act#" + TestBase.timestamp;
-    a.type = 'Client';
+    a.type = 'Checking';
     a.category = 'CategoryA';
     a.subCategory = 'CategoryB';
     a.isCloseable = true;
@@ -13,23 +13,24 @@ exports.accountCreate = function(test){
     a.targetAmount = 500;
     a.targetDate = '01/01/2030';
     a.create(function(ex, act) {
-        if (ex != null){
+        if (ex){
             console.log(ex);
             test.ok(false);
             test.done();
         } else {
-            TestBase.prepaidAccountId = act.accountId;
-            test.ok(TestBase.prepaidAccountId > 0);
+            console.log('accountId=' + act.accountId);
+            TestBase.exampleAccountId = act.accountId;
+            test.ok(TestBase.exampleAccountId > 0);
             test.done();
         }
-    }, TestBase.prepaidConn, TestBase.loggingObject);
+    }, TestBase.exampleConn, TestBase.loggingObject);
 };
 
 exports.accountGet = function(test){
-    CorePro.account().get(TestBase.prepaidCustomerId, TestBase.prepaidAccountId, function(ex, act) {
+    CorePro.account().get(TestBase.exampleCustomerId, TestBase.exampleAccountId, function(ex, act) {
         act.name = 'nodejs test ' + TestBase.timestamp;
         act.update(function (ex, aid) {
-            if (ex != null){
+            if (ex){
                 console.log(ex);
                 test.ok(false);
                 test.done();
@@ -37,13 +38,13 @@ exports.accountGet = function(test){
                 test.equal(act.accountId, aid.accountId);
                 test.done();
             }
-        }, TestBase.prepaidConn, TestBase.loggingObject);
-    }, TestBase.prepaidConn, TestBase.loggingObject);
+        }, TestBase.exampleConn, TestBase.loggingObject);
+    }, TestBase.exampleConn, TestBase.loggingObject);
 };
 
 exports.accountList = function(test){
-    CorePro.account().list(TestBase.prepaidCustomerId, function(ex, data){
-        if (ex != null){
+    CorePro.account().list(TestBase.exampleCustomerId, function(ex, data){
+        if (ex){
             console.log(ex);
             test.ok(false);
             test.done();
@@ -54,5 +55,5 @@ exports.accountList = function(test){
             test.equal(data.length, 1);
             test.done();
         }
-    }, TestBase.prepaidConn, TestBase.loggingObject);
+    }, TestBase.exampleConn, TestBase.loggingObject);
 };

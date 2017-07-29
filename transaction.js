@@ -1,5 +1,5 @@
 /**
- * Created by socialmoneydev on 9/1/2014.
+ * Created by socialmoneydev on 7/28/2017.
  */
 
 var Requestor = require('./utils/requestor');
@@ -17,11 +17,17 @@ var Transaction = function() {
     self.amount = null;
     self.settledDate = null;
     self.voidedDate = null;
-    self.nachaDescription = null;
+    self.description = null;
     self.friendlyDescription = null;
     self.availableDate = null;
     self.returnCode = null;
     self.isCredit = null;
+    self.feeCode = null;
+    self.feeDescription = null;
+    self.cardId = null;
+    self.subTypeCode = null;
+    self.subType = null;
+    self.institutionName = null;
 
     self.list = function(customerId, accountId, status, beginDate, endDate, pageNumber, pageSize, callback, connection, loggingObject){
         var start = '';
@@ -38,7 +44,7 @@ var Transaction = function() {
             finish = endDate || '';
         }
 
-        if (finish != '' && start == ''){
+        if (finish && start === ''){
             start = '1900-01-01';
         }
 
@@ -47,7 +53,23 @@ var Transaction = function() {
         }, connection, loggingObject);
     };
 
+    self.get = function(customerId, transactionId, callback, connection, loggingObject) {
+        customerId = customerId || self.customerId;
+        transactionId = transactionId || self.transactionId;
+        new Requestor().get('/transaction/get/' + customerId + '/' + transactionId, Transaction, function (ex, data) {
+            callback(ex, data);
+        }, connection, loggingObject);
+    };
+
+    self.getByTag = function(customerId, tag, callback, connection, loggingObject) {
+        customerId = customerId || self.customerId;
+        tag = tag || self.tag;
+        new Requestor().get('/transaction/getbytag/' + customerId + '/' + encodeURIComponent(tag), Transaction, function (ex, data) {
+            callback(ex, data);
+        }, connection, loggingObject);
+    };
 
 };
+
 
 module.exports = Transaction;

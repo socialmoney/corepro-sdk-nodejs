@@ -12,16 +12,19 @@ var CustomerBeneficiary = function() {
     self.customerId = null;
     self.customerBeneficiaryId = null;
     self.firstName = null;
+    self.middleName = null;
     self.lastName = null;
-    self.birthDate = null;
     self.taxId = null;
     self.taxIdMasked = null;
+    self.birthDate = null;
     self.isActive = null;
+    self.lastModifiedDate = null;
 
     self.get = function (customerId, customerBeneficiaryId,callback, connection, loggingObject) {
-        new Requestor().get('/customerbeneficiary/get/' + customerId + '/' + customerBeneficiaryId, CustomerBeneficiary, function(ex, data) {
-            callback(ex, data);
-        }, connection, loggingObject);
+        new Requestor().get('/customerbeneficiary/get/' + customerId + '/' + customerBeneficiaryId, CustomerBeneficiary,
+            function(ex, data) {
+                callback(ex, data);
+            }, connection, loggingObject);
     };
 
     self.list = function (customerId, callback, connection, loggingObject) {

@@ -1,7 +1,6 @@
 {
-
     "name": "corepro",
-    "version": "0.0.3",
+    "version": "0.1.1",
     "description": "A NodeJS SDK for consuming the CorePro API",
     "main": "index.js",
     "scripts": {
@@ -16,7 +15,7 @@
         "api",
         "sdk"
     ],
-    "author": "SocialMoneyDev <devsupport@socialmoney.com> (https://docs.corepro.io/)",
+    "author": "Brock Weaver <brock.weaver@q2ebanking.com> (https://docs.corepro.io/)",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/socialmoney/corepro-sdk-nodejs/issues"
