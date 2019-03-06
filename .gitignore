@@ -4,8 +4,7 @@ logs
 
 # configs
 config.json
-test/test-nacha-config.json
-test/test-prepaid-config.json
+test/test-example1-config.json
 
 # Runtime data
 pids
