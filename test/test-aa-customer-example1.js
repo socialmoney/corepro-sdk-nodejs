@@ -22,13 +22,27 @@ exports.customerCreate = function(test) {
         } else {
             console.log('customerId=' + cust.customerId);
             TestBase.exampleCustomerId = cust.customerId;
-            console.log(TestBase.timestamp);
             test.ok(TestBase.exampleCustomerId > 0);
             test.done();
         }
     }, TestBase.exampleConn, TestBase.loggingObject);
 };
 
+exports.customerUpdate = function(test) {
+  var c = CorePro.customer();
+  c.customerId = TestBase.exampleCustomerId;
+  c.email = "velma@corepro.io";
+  c.update(function(ex, cust) {
+      if (ex) {
+        console.log(ex);
+        test.ok(false);
+        test.done();
+      } else {
+        test.equal(cust.customerId, TestBase.exampleCustomerId);
+        test.done();
+      }
+  }, TestBase.exampleConn, TestBase.loggingObject)
+}
 
 exports.customerGet = function(test) {
     CorePro.customer().get(TestBase.exampleCustomerId, function (ex, cust) {
