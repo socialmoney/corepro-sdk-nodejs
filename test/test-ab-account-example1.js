@@ -67,3 +67,18 @@ exports.accountClose = function(test){
       }
     }, TestBase.exampleConn, TestBase.loggingObject)
 };
+
+exports.customerArchive = function(test){
+    var c = CorePro.customer();
+    c.customerId = TestBase.exampleCustomerId;
+    c.archive(function (ex, cust) {
+        if (ex) {
+          console.log(ex);
+          test.ok(false);
+          test.done();
+        } else {
+          test.equal(cust.customerId, TestBase.exampleCustomerId);
+          test.done();
+        }
+    }, TestBase.exampleConn, TestBase.loggingObject);
+};
