@@ -3,8 +3,8 @@
  */
 var Connection = require('../connection');
 
-var TestBase = function() {
-};
+var TestBase = function() {};
+
 // common properties
 TestBase.timestamp = new Date().toISOString();
 
