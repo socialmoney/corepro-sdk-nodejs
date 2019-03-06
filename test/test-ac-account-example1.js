@@ -5,6 +5,7 @@ exports.accountCreate = function(test){
     var a = CorePro.account();
     a.customerId = TestBase.exampleCustomerId;
     a.tag = "act#" + TestBase.timestamp;
+    a.productId = TestBase.exampleProductId;
     a.type = 'Checking';
     a.category = 'CategoryA';
     a.subCategory = 'CategoryB';

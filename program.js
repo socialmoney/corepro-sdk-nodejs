@@ -35,6 +35,7 @@ var Program = function() {
     self.perUserAccountCountMax = null;
     self.perUserTotalAccountBalanceMax = null;
     self.accounts = null;
+    self.products = null;
     self.externalAccounts = null;
     self.checkingProducts = null;
     self.eCodeProducts = null;

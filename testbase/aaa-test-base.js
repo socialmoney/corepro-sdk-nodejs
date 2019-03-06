@@ -19,6 +19,8 @@ TestBase.exampleConn = new Connection().createFromConfig(
   testExampleConfig.coreProDomainName
 );
 
+TestBase.exampleProductId = null;
+
 TestBase.exampleCustomerId = null;
 
 TestBase.exampleAccountId = null;
