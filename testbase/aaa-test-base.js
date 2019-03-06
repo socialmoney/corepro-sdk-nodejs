@@ -12,7 +12,7 @@ TestBase.documentId = null;
 
 TestBase.loggingObject = null;
 
-var testExampleConfig = require('./test-example1-config.json');
+var testExampleConfig = require('./test-config.json');
 TestBase.exampleConn = new Connection().createFromConfig(
   testExampleConfig.coreProApiKey,
   testExampleConfig.coreProApiSecret,

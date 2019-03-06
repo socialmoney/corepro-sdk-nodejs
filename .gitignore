@@ -4,7 +4,7 @@ logs
 
 # configs
 config.json
-test/test-example1-config.json
+testbase/test-config.json
 
 # Runtime data
 pids
