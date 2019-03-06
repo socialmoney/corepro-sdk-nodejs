@@ -2,7 +2,6 @@
  * Created by socialmoneydev on 8/29/2014.
  */
 
-
 var Connection = function() {
     var self = this;
 

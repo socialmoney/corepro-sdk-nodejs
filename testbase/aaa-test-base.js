@@ -12,9 +12,12 @@ TestBase.documentId = null;
 
 TestBase.loggingObject = null;
 
-
 var testExampleConfig = require('./test-example1-config.json');
-TestBase.exampleConn = new Connection().createFromConfig(testExampleConfig.apiKey, testExampleConfig.apiSecret);
+TestBase.exampleConn = new Connection().createFromConfig(
+  testExampleConfig.coreProApiKey,
+  testExampleConfig.coreProApiSecret,
+  testExampleConfig.coreProDomainName
+);
 
 TestBase.exampleCustomerId = null;
 
@@ -27,19 +30,5 @@ TestBase.exampleCustomerBeneficiaryId = null;
 TestBase.exampleInternalToExternalTransactionId = null;
 
 TestBase.exampleExternalToInternalTransactionId = null;
-
-
-// // nacha-specific program
-// var testNachaConfig = require('./test-nacha-config.json');
-//
-// TestBase.nachaConn = new Connection().createFromConfig(testNachaConfig.apiKey, testNachaConfig.apiSecret);
-//
-// TestBase.nachaCustomerId = null;
-//
-// TestBase.nachaAccountId = null;
-//
-// TestBase.nachaExternalAccountId = null;
-//
-// TestBase.nachaExternalToInternalTransactionId = null;
 
 module.exports = TestBase;
