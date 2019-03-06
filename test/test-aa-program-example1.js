@@ -16,7 +16,7 @@ exports.programGet = function(test) {
             for (var key in program.products) {
               TestBase.exampleProductId = program.products[key].productId;
             }
-            console.log("Using productId: " + TestBase.exampleProductId)
+            console.log("productId=" + TestBase.exampleProductId)
             test.ok(true);
             test.done();
         }
