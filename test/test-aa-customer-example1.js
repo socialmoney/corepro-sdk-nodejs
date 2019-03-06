@@ -31,7 +31,7 @@ exports.customerCreate = function(test) {
 exports.customerUpdate = function(test) {
   var c = CorePro.customer();
   c.customerId = TestBase.exampleCustomerId;
-  c.email = "velma@corepro.io";
+  c.emailAddress = "velma@corepro.io";
   c.update(function(ex, cust) {
       if (ex) {
         console.log(ex);
@@ -46,6 +46,19 @@ exports.customerUpdate = function(test) {
 
 exports.customerGet = function(test) {
     CorePro.customer().get(TestBase.exampleCustomerId, function (ex, cust) {
+        if (ex) {
+          console.log(ex);
+          test.ok(false);
+          test.done();
+        } else {
+          test.equal(cust.customerId, TestBase.exampleCustomerId);
+          test.done();
+        }
+    }, TestBase.exampleConn, TestBase.loggingObject);
+};
+
+exports.customerGetByEmail = function(test) {
+    CorePro.customer().getByEmail("velma@corepro.io", function (ex, cust) {
         if (ex) {
           console.log(ex);
           test.ok(false);
