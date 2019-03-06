@@ -46,21 +46,39 @@ exports.customerUpdate = function(test) {
 
 exports.customerGet = function(test) {
     CorePro.customer().get(TestBase.exampleCustomerId, function (ex, cust) {
-        test.equal(cust.customerId, TestBase.exampleCustomerId);
-        test.done();
+        if (ex) {
+          console.log(ex);
+          test.ok(false);
+          test.done();
+        } else {
+          test.equal(cust.customerId, TestBase.exampleCustomerId);
+          test.done();
+        }
     }, TestBase.exampleConn, TestBase.loggingObject);
 };
 
 exports.customerGetByTag = function(test) {
     CorePro.customer().getByTag('vam' + TestBase.timestamp, function (ex, cust) {
-        test.equal(cust.customerId, TestBase.exampleCustomerId);
-        test.done();
+        if (ex) {
+          console.log(ex);
+          test.ok(false);
+          test.done();
+        } else {
+          test.equal(cust.customerId, TestBase.exampleCustomerId);
+          test.done();
+        }
     }, TestBase.exampleConn, TestBase.loggingObject);
 };
 
 exports.customerList = function(test){
     CorePro.customer().list(function (ex, cust) {
-        test.ok(cust[0].customerCount > 0);
-        test.done();
+        if (ex) {
+          console.log(ex);
+          test.ok(false);
+          test.done();
+        } else {
+          test.ok(cust[0].customerCount > 0);
+          test.done();
+        }
     }, TestBase.exampleConn, TestBase.loggingObject);
 };
