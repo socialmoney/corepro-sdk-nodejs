@@ -14,6 +14,7 @@ var Connection = function() {
 
     self.createFromConfig = function(apiKeyOverride, apiSecretOverride, domainNameOverride, proxyServerOverride, proxyPortOverride) {
         if (fs.existsSync('./config.json')) {
+          var config = require('./config.json');
           self.apiKey = apiKeyOverride || config.coreProApiKey || null;
           self.apiSecret = apiSecretOverride || config.coreProApiSecret || null;
           self.domainName = domainNameOverride || config.coreProDomainName ||  null;
