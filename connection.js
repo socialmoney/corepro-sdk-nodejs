@@ -1,6 +1,7 @@
 /**
  * Created by socialmoneydev on 8/29/2014.
  */
+var fs = require('fs');
 
 var Connection = function() {
     var self = this;
@@ -11,13 +12,21 @@ var Connection = function() {
     self.proxyServer = null;
     self.proxyPort = null;
 
-    self.createFromConfig = function(apiKeyOverride, apiSecretOverride, domainNameOverride, proxyServerOverride, proxyPortOverride){
-        var config = require('./config.json');
-        self.apiKey = apiKeyOverride || config.coreProApiKey || null;
-        self.apiSecret = apiSecretOverride || config.coreProApiSecret || null;
-        self.domainName = domainNameOverride || config.coreProDomainName ||  null;
-        self.proxyServer = proxyServerOverride || config.coreProProxyServer ||  null;
-        self.proxyPort = proxyPortOverride || config.coreProProxyPort||  null;
+    self.createFromConfig = function(apiKeyOverride, apiSecretOverride, domainNameOverride, proxyServerOverride, proxyPortOverride) {
+        if (fs.existsSync('./config.json')) {
+          self.apiKey = apiKeyOverride || config.coreProApiKey || null;
+          self.apiSecret = apiSecretOverride || config.coreProApiSecret || null;
+          self.domainName = domainNameOverride || config.coreProDomainName ||  null;
+          self.proxyServer = proxyServerOverride || config.coreProProxyServer ||  null;
+          self.proxyPort = proxyPortOverride || config.coreProProxyPort ||  null;
+        } else {
+          self.apiKey = apiKeyOverride || null;
+          self.apiSecret = apiSecretOverride || null;
+          self.domainName = domainNameOverride ||  null;
+          self.proxyServer = proxyServerOverride ||  null;
+          self.proxyPort = proxyPortOverride || null;
+        }
+
         return self;
     };
 
