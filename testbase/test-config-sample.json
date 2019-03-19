@@ -1,4 +1,5 @@
 {
-    "apiKey" : "your-test-api-key-here",
-    "apiSecret" : "your-test-api-secret-here"
+    "coreProApiKey" : "your-test-api-key-here",
+    "coreProApiSecret" : "your-test-api-secret-here",
+    "coreProDomainName" : "sandbox-api.corepro.io"
 }

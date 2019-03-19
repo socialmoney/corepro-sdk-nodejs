@@ -7,39 +7,49 @@ var Account = require('./account');
 var ExternalAccount = require('./externalaccount');
 var ProgramInterestRate = require('./models/programinterestrate');
 var ProgramLimit = require('./models/programlimit');
-var ProgramECode = require('./models/programecode');
 var ProgramChecking = require('./models/programchecking');
 var ProgramPrepaid = require('./models/programprepaid');
 var ProgramSavings = require('./models/programsavings');
 
 var Program = function() {
     var self = this;
+    // Exists in docs
     self.requestId = null;
+    self.decimalCount = null;
+    self.filledDate = null;
+    self.isInterestEnabled = null;
+    self.isInternalToInternalTransferEnabled = null;
+    self.isRecurringContributionEnabled = null;
     self.name = null;
-    self.verificationType = null;
-    self.timeZone = null;
-    self.perUserDailyWithdrawLimit = null;
-    self.perUserMonthlyWithdrawLimit = null;
-    self.perProgramDailyWithdrawLimit = null;
-    self.perUserDailyDepositLimit = null;
-    self.perUserMonthlyDepositLimit = null;
     self.perProgramDailyDepositLimit = null;
+    self.perProgramDailyWithdrawLimit = null;
+    self.perTransactionDepositLimit = null;
+    self.perTransactionWithdrawLimit = null;
+    self.perUserDailyDepositLimit = null;
+    self.perUserDailyWithdrawLimit = null;
+    self.perUserMonthlyDepositLimit = null;
+    self.perUserMonthlyWithdrawLimit = null;
     self.regDFeeAmount = null;
     self.regDMonthlyTransactionWithdrawCountMax = null;
+    self.timeZone = null;
+    self.verificationType = null;
     self.website = null;
-    self.isInternalToInternalTransferEnabled = null;
-    self.decimalCount = null;
-    self.isRecurringContributionEnabled = null;
-    self.filledDate = null;
+    self.accounts = null;
+    self.externalAccounts = null;
+    self.products = null;
+    self.checkingProducts = null; // deprecated
+    self.prepaidProducts = null; // deprecated
+    self.savingsProducts = null; // deprecated
+    self.publicKeyAlgorithms = null;
+
+    // Exists only in response
+    self.bank = null;
+    self.isDebitRewardsEnabled = null;
     self.perUserExternalAccountCountMax = null;
     self.perUserAccountCountMax = null;
     self.perUserTotalAccountBalanceMax = null;
-    self.accounts = null;
-    self.externalAccounts = null;
-    self.checkingProducts = null;
-    self.eCodeProducts = null;
-    self.prepaidProducts = null;
-    self.savingsProducts = null;
+    self.validAccountTypes = null;
+    self.validProductTypes = null;
 
     self.customMerge = function(propertyName, value){
         var r = new Requestor();
@@ -94,15 +104,6 @@ var Program = function() {
                 for (var prop3 in value){
                     if (value.hasOwnProperty(prop3)){
                         self.checkingProducts[prop3] = r.merge(value[prop3], new ProgramChecking());
-                    }
-                }
-            }
-        } else if (propertyName === 'eCodeProducts'){
-            self.eCodeProducts = {};
-            if (value){
-                for (var prop4 in value){
-                    if (value.hasOwnProperty(prop4)){
-                        self.eCodeProducts[prop4] = r.merge(value[prop4], new ProgramECode());
                     }
                 }
             }

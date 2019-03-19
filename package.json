@@ -25,6 +25,7 @@
         "test": "test"
     },
     "devDependencies": {
+        "nodeunit": "^0.11.3",
         "requirejs": "^2.1.14"
     }
 }
