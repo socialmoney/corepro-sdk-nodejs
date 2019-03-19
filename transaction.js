@@ -9,6 +9,7 @@ var Transaction = function() {
     self.transactionCount = null;
     self.customerId = null;
     self.transactionId = null;
+    self.masterId = null;
     self.tag = null;
     self.createdDate = null;
     self.type = null;
