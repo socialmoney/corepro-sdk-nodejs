@@ -3,6 +3,8 @@
  */
 
 var Requestor = require('./utils/requestor');
+var util = require('lodash');
+
 var Transaction = function() {
     var self = this;
     self.requestId = null;
