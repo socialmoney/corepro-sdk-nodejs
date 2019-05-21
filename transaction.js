@@ -55,7 +55,7 @@ var Transaction = function() {
             start = '1900-01-01';
         }
 
-        new Requestor().get('/transaction/list/' + customerId + '/' + accountId + '/' + encodeURIComponent(status + '') + '/' + start + '/' + finish + '?pageNumber=' + (pageNumber || '0') + '&pageSize=' + (pageSize || '50'), Transaction, function(ex, data) {
+        new Requestor().get('/transaction/list/' + customerId + '/' + accountId + '/' + encodeURIComponent(status + '') + '/' + start + '/' + finish + '?pageNumber=' + (pageNumber || '0') + '&pageSize=' + (pageSize || '200'), Transaction, function(ex, data) {
             callback(ex, data);
         }, connection, loggingObject);
     };
