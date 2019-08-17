@@ -3,12 +3,15 @@
  */
 
 var Requestor = require('./utils/requestor');
+var util = require('lodash');
+
 var Transaction = function() {
     var self = this;
     self.requestId = null;
     self.transactionCount = null;
     self.customerId = null;
     self.transactionId = null;
+    self.masterId = null;
     self.tag = null;
     self.createdDate = null;
     self.type = null;
@@ -30,6 +33,10 @@ var Transaction = function() {
     self.institutionName = null;
 
     self.list = function(customerId, accountId, status, beginDate, endDate, pageNumber, pageSize, callback, connection, loggingObject){
+        customerId = customerId || self.customerId;
+        accountId = accountId || self.accountId;
+        status = status || self.status;
+
         var start = '';
         if (util.isDate(beginDate)){
             start = beginDate.toISOString().slice(0,10);
@@ -48,7 +55,7 @@ var Transaction = function() {
             start = '1900-01-01';
         }
 
-        new Requestor().get('/transaction/list/' + self.customerId + '/' + self.accountId + '/' + encodeURIComponent(self.status + '') + '/' + start + '/' + finish + '?pageNumber=' + (pageNumber || '0') + '&pageSize=' + (pageSize || '50'), Transaction, function(ex, data){
+        new Requestor().get('/transaction/list/' + customerId + '/' + accountId + '/' + encodeURIComponent(status + '') + '/' + start + '/' + finish + '?pageNumber=' + (pageNumber || '0') + '&pageSize=' + (pageSize || '200'), Transaction, function(ex, data) {
             callback(ex, data);
         }, connection, loggingObject);
     };

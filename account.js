@@ -20,6 +20,7 @@ var Account = function() {
     self.routingNumber = null;
     self.status = null;
     self.type = null;
+    self.productId = null;
     self.isPrimary = null;
     self.isCloseable = null;
 

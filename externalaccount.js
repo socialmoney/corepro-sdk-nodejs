@@ -1,6 +1,9 @@
 /**
  * Created by socialmoneydev on 8/30/2014.
  */
+
+
+var Requestor = require("./utils/requestor");
 var ExternalAccountIdOnly = require("./models/externalaccountidonly");
 var ExternalAccountVerify = require("./models/externalaccountverify");
 var ExternalAccount = function(){
@@ -14,7 +17,7 @@ var ExternalAccount = function(){
     self.routingNumberMasked = null;
     self.accountNumber = null;
     self.accountNumberMasked = null;
-    self.type= null;
+    self.type = null;
     self.nickName = null;
     self.status = null;
     self.statusDate = null;

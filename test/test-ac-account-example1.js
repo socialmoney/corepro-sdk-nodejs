@@ -5,6 +5,7 @@ exports.accountCreate = function(test){
     var a = CorePro.account();
     a.customerId = TestBase.exampleCustomerId;
     a.tag = "act#" + TestBase.timestamp;
+    a.productId = TestBase.exampleProductId;
     a.type = 'Checking';
     a.category = 'CategoryA';
     a.subCategory = 'CategoryB';
@@ -49,11 +50,36 @@ exports.accountList = function(test){
             test.ok(false);
             test.done();
         } else {
-//                for(var i=0;i<accounts.length;i++){
-//                    console.log(accounts[i]);
-//                }
             test.equal(data.length, 1);
             test.done();
+        }
+    }, TestBase.exampleConn, TestBase.loggingObject);
+};
+
+exports.accountClose = function(test){
+    CorePro.account().close(TestBase.exampleCustomerId, TestBase.exampleAccountId, null, null, function(ex, act) {
+      if (ex) {
+        console.log(ex);
+        test.ok(false);
+        test.done();
+      } else {
+        test.equal(act.accountId, TestBase.exampleAccountId);
+        test.done();
+      }
+    }, TestBase.exampleConn, TestBase.loggingObject)
+};
+
+exports.customerArchive = function(test){
+    var c = CorePro.customer();
+    c.customerId = TestBase.exampleCustomerId;
+    c.archive(function (ex, cust) {
+        if (ex) {
+          console.log(ex);
+          test.ok(false);
+          test.done();
+        } else {
+          test.equal(cust.customerId, TestBase.exampleCustomerId);
+          test.done();
         }
     }, TestBase.exampleConn, TestBase.loggingObject);
 };

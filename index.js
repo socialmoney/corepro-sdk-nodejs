@@ -4,6 +4,7 @@
 
 var Account = require('./account');
 var BankDocument = require('./bankdocument');
+var Connection = require('./connection');
 var Customer = require('./customer');
 var CustomerBeneficiary = require('./customerbeneficiary');
 var CustomerDocument = require('./customerdocument');
@@ -20,6 +21,9 @@ module.exports = {
     },
     bankDocument: function() {
         return new BankDocument();
+    },
+    connection: function() {
+        return new Connection();
     },
     customer: function() {
         return new Customer();
